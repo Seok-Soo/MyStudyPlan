@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="61Q-gb-ujI">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
@@ -8,34 +8,114 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Focus-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MyStudyPlan" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Focus" id="BYZ-38-t0r" customClass="ScheduleViewController" customModule="MyStudyPlan" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tabBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6Ru-zs-879">
-                                <rect key="frame" x="0.0" y="735" width="393" height="49"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <items>
-                                    <tabBarItem systemItem="favorites" id="dcB-qP-iiA"/>
-                                    <tabBarItem systemItem="more" id="n0x-ja-sAm"/>
-                                </items>
-                            </tabBar>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Focus" image="play.circle" catalog="system" id="SrJ-aT-gfX"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="24" y="-27"/>
+            <point key="canvasLocation" x="4280" y="-220"/>
+        </scene>
+        <!--Settings-->
+        <scene sceneID="z0s-qW-GDE">
+            <objects>
+                <viewController title="Settings" id="ODA-6Y-1XO" customClass="FocusViewController" customModule="MyStudyPlan" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nCW-kf-ceP">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="toA-lf-F9C"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Setting" image="gearshape" catalog="system" id="syu-kY-xi8"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="L6J-Ql-cmV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3450" y="68"/>
+        </scene>
+        <!--통계-->
+        <scene sceneID="C2Z-MY-J1w">
+            <objects>
+                <viewController id="C5d-FY-eq6" customClass="StatsViewController" customModule="MyStudyPlan" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fe0-nQ-DYa">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="T3w-Hh-o3b"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="통계" image="chart.bar" catalog="system" id="HH4-pe-60j"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CV2-yX-xer" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2583" y="68"/>
+        </scene>
+        <!--Todo-->
+        <scene sceneID="eAU-4t-Olg">
+            <objects>
+                <viewController title="Todo" id="Efv-Ft-Gh3" customClass="TodoViewController" customModule="MyStudyPlan" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="wdb-U1-y7n">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="Rdu-KL-6en"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Todo" image="checkmark.circle" catalog="system" id="dNu-Fs-KFD"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CeR-sq-LIp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2582" y="-575"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="tmK-wy-R77">
+            <objects>
+                <tabBarController id="61Q-gb-ujI" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ssj-eY-4vU">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="Efv-Ft-Gh3" kind="relationship" relationship="viewControllers" id="zq0-8h-euK"/>
+                        <segue destination="C5d-FY-eq6" kind="relationship" relationship="viewControllers" id="mmK-EE-QYU"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="fhG-T3-qXZ"/>
+                        <segue destination="qrY-XK-9ve" kind="relationship" relationship="viewControllers" id="Rzv-QX-iaQ"/>
+                        <segue destination="ODA-6Y-1XO" kind="relationship" relationship="viewControllers" id="h8t-Ci-Dpc"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="23E-H3-6dr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1537" y="-220"/>
+        </scene>
+        <!--Schedule-->
+        <scene sceneID="iz0-NG-1yE">
+            <objects>
+                <viewController title="Schedule" id="qrY-XK-9ve" customClass="SettingsViewController" customModule="MyStudyPlan" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="XFW-nK-slJ">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="9Vi-bZ-Bvn"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Schedule" image="calendar" catalog="system" id="0Nc-nK-nwd"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zgK-6n-4zH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3450" y="-575"/>
         </scene>
     </scenes>
     <resources>
+        <image name="calendar" catalog="system" width="128" height="107"/>
+        <image name="chart.bar" catalog="system" width="128" height="89"/>
+        <image name="checkmark.circle" catalog="system" width="128" height="123"/>
+        <image name="gearshape" catalog="system" width="128" height="123"/>
+        <image name="play.circle" catalog="system" width="128" height="123"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
