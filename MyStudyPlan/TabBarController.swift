@@ -13,15 +13,21 @@ class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let homeVC = HomeViewController()
-        homeVC.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 0)
+        let todoVC = TodoViewController()
+        todoVC.tabBarItem = UITabBarItem(title: "할일", image: UIImage(systemName: "checkmark.circle"), tag: 0)
 
-        let reportVC = StatsViewController()
-        reportVC.tabBarItem = UITabBarItem(title: "Report", image: UIImage(systemName: "book"), tag: 1)
+//        let statsVC = StatsViewController()
+//        statsVC.tabBarItem = UITabBarItem(title: "통계", image: UIImage(systemName: "chart.bar"), tag: 1)
+//
+//        let focusVC = FocusViewController()
+//        focusVC.tabBarItem = UITabBarItem(title: "학습시작", image: UIImage(systemName: "play.circle"), tag: 2)
+//
+//        let scheduleVC = ScheduleViewController()
+//        scheduleVC.tabBarItem = UITabBarItem(title: "일정", image: UIImage(systemName: "calendar"), tag: 3)
+//
+//        let settingsVC = SettingsViewController()
+//        settingsVC.tabBarItem = UITabBarItem(title: "설정", image: UIImage(systemName: "gear"), tag: 4)
 
-        let settingsVC = SettingsViewController()
-        settingsVC.tabBarItem = UITabBarItem(title: "Settings", image: UIImage(systemName: "gear"), tag: 2)
-
-        viewControllers = [homeVC, reportVC, settingsVC]
+        viewControllers = [todoVC, statsVC, focusVC, scheduleVC, settingsVC]
     }
 }
