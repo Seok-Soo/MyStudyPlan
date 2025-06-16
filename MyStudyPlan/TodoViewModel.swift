@@ -55,18 +55,16 @@ class TodoViewModel {
         }
     }
 
-    func addTodo(title: String) {
-        let id = UUID().uuidString
-        let newData: [String: Any] = [
-            "id": id,
-            "title": title,
-            "status": "시작전",
-            "date": currentDate,
-            "duration": 0
+    func addTodo(item: TodoItem) {
+        let data: [String: Any] = [
+            "id": item.id,
+            "title": item.title,
+            "status": item.status,
+            "date": item.date,
+            "duration": item.duration
         ]
-        db.saveChange(key: id, object: newData, action: .add)
+        db.saveChange(key: item.id, object: data, action: .add)
     }
-
     func updateStatus(for todo: TodoItem, to newStatus: String) {
         let newData: [String: Any] = [
             "id": todo.id,

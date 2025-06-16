@@ -11,7 +11,6 @@ class TodoViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     // MARK: - IBOutlet 연결
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var dateLabel: UILabel!
     
     // MARK: - 날짜 관련
@@ -67,12 +66,23 @@ class TodoViewController: UIViewController, UITableViewDelegate, UITableViewData
         return f.string(from: date)
     }
 
-    // MARK: - 할 일 추가
-    @IBAction func addButtonTapped(_ sender: UIButton) {
-        guard let text = textField.text, !text.isEmpty else { return }
-        viewModel.addTodo(title: text)
-        textField.text = ""
+    @IBAction func didTapAddButton(_ sender: UIButton) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let addVC = storyboard.instantiateViewController(withIdentifier: "TodoAddViewController") as? TodoAddViewController {
+            
+            // ✅ iOS 기본 Bottom Sheet 스타일
+            if let sheet = addVC.sheetPresentationController {
+                sheet.detents = [.medium(), .large()]  // 중간 or 큰 높이 설정
+                sheet.prefersGrabberVisible = true     // 위쪽 '끄는 손잡이' 표시
+            }
+            
+            addVC.onAddTodo = { [weak self] newTodo in
+                self?.viewModel.addTodo(item: newTodo)
+            }
+            present(addVC, animated: true)
+        }
     }
+
 
     // MARK: - TableView Methods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
