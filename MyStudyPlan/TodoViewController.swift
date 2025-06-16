@@ -8,39 +8,51 @@
 import UIKit
 
 class TodoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-    
+
     // MARK: - IBOutlet 연결
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dateLabel: UILabel!
-    
+    @IBOutlet weak var addButton: UIButton!  // ✅ 추가: 동그란 버튼 연결
+
     // MARK: - 날짜 관련
     var currentDate: Date = Date()
-    
+
     let formatter: DateFormatter = {
         let f = DateFormatter()
         f.locale = Locale(identifier: "ko_KR")
         f.dateFormat = "yyyy.MM.dd.EEE"
         return f
     }()
-    
+
     // MARK: - 뷰모델
     var viewModel = TodoViewModel()
 
     // MARK: - 생명 주기
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         tableView.delegate = self
         tableView.dataSource = self
-        
+
         viewModel.onUpdate = {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
         }
-        
+
         updateDateLabel()
         viewModel.startListening(for: dateString(from: currentDate))
+    }
+
+    // ✅ 추가: 버튼을 동그랗게
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        addButton.layer.cornerRadius = addButton.frame.size.width / 2
+        addButton.clipsToBounds = true
+        addButton.setTitle("+", for: .normal)
+        addButton.titleLabel?.font = .systemFont(ofSize: 30, weight: .bold)
+        addButton.tintColor = .white
+        addButton.backgroundColor = .systemIndigo
     }
 
     // MARK: - 날짜 이동 액션
@@ -49,17 +61,17 @@ class TodoViewController: UIViewController, UITableViewDelegate, UITableViewData
         updateDateLabel()
         viewModel.startListening(for: dateString(from: currentDate))
     }
-    
+
     @IBAction func didTapNextDate(_ sender: UIButton) {
         currentDate = Calendar.current.date(byAdding: .day, value: 1, to: currentDate)!
         updateDateLabel()
         viewModel.startListening(for: dateString(from: currentDate))
     }
-    
+
     func updateDateLabel() {
         dateLabel.text = formatter.string(from: currentDate)
     }
-    
+
     func dateString(from date: Date) -> String {
         let f = DateFormatter()
         f.dateFormat = "yyyy-MM-dd"
@@ -69,20 +81,19 @@ class TodoViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func didTapAddButton(_ sender: UIButton) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let addVC = storyboard.instantiateViewController(withIdentifier: "TodoAddViewController") as? TodoAddViewController {
-            
+
             // ✅ iOS 기본 Bottom Sheet 스타일
             if let sheet = addVC.sheetPresentationController {
-                sheet.detents = [.medium(), .large()]  // 중간 or 큰 높이 설정
-                sheet.prefersGrabberVisible = true     // 위쪽 '끄는 손잡이' 표시
+                sheet.detents = [.medium(), .large()]
+                sheet.prefersGrabberVisible = true
             }
-            
+
             addVC.onAddTodo = { [weak self] newTodo in
                 self?.viewModel.addTodo(item: newTodo)
             }
             present(addVC, animated: true)
         }
     }
-
 
     // MARK: - TableView Methods
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -92,12 +103,12 @@ class TodoViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let todo = viewModel.todos[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "TodoCell", for: indexPath)
-        
+
         var content = cell.defaultContentConfiguration()
         content.text = todo.title
         content.secondaryText = "상태: \(todo.status)"
         cell.contentConfiguration = content
-        
+
         return cell
     }
 
@@ -106,7 +117,7 @@ class TodoViewController: UIViewController, UITableViewDelegate, UITableViewData
         let nextStatus = nextStatusFor(current: todo.status)
         viewModel.updateStatus(for: todo, to: nextStatus)
     }
-    
+
     func nextStatusFor(current: String) -> String {
         switch current {
         case "시작전": return "진행중"

@@ -8,7 +8,7 @@
 import UIKit
 import FSCalendar
 
-class ScheduleViewController: UIViewController, FSCalendarDelegate, FSCalendarDataSource, UITableViewDelegate, UITableViewDataSource {
+class ScheduleViewController: UIViewController, FSCalendarDelegate, FSCalendarDataSource, FSCalendarDelegateAppearance, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var calendar: FSCalendar!
     @IBOutlet weak var tableView: UITableView!
@@ -23,12 +23,20 @@ class ScheduleViewController: UIViewController, FSCalendarDelegate, FSCalendarDa
         calendar.delegate = self
         calendar.dataSource = self
 
+        // ✨ 달력 외형 설정 (선택)
+        calendar.appearance.headerDateFormat = "YYYY년 M월"
+        calendar.appearance.headerTitleColor = .black
+        calendar.appearance.weekdayTextColor = .darkGray
+        calendar.appearance.selectionColor = .systemIndigo
+        calendar.appearance.todayColor = .lightGray
+        calendar.appearance.titleTodayColor = .white
+
         tableView.delegate = self
         tableView.dataSource = self
 
         selectedDate = getToday()
 
-        // Firestore에서 Todo 전부 불러오기
+        // 🔄 Firestore에서 Todo 불러오기
         DbFirebase(parentNotification: { [weak self] data, action in
             guard let self = self,
                   let data = data,
@@ -44,7 +52,7 @@ class ScheduleViewController: UIViewController, FSCalendarDelegate, FSCalendarDa
 
             self.allTodos.append(item)
             self.updateTodoList(for: self.selectedDate)
-            self.calendar.reloadData()  // 🔄 일정 반영을 위해 달력 갱신
+            self.calendar.reloadData()
         }).setQueryAll()
     }
 
@@ -61,8 +69,16 @@ class ScheduleViewController: UIViewController, FSCalendarDelegate, FSCalendarDa
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd"
         let dateString = formatter.string(from: date)
-        let matches = allTodos.filter { $0.date == dateString }
-        return matches.isEmpty ? 0 : 1
+        return allTodos.contains(where: { $0.date == dateString }) ? 1 : 0
+    }
+
+    func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {
+        let weekday = Calendar.current.component(.weekday, from: date)
+        switch weekday {
+        case 1: return .red    // 일요일
+        case 7: return .blue   // 토요일
+        default: return .black // 평일
+        }
     }
 
     // MARK: - Helpers
