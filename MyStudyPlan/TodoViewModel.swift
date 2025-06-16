@@ -22,6 +22,7 @@ class TodoViewModel {
 
     func startListening(for date: String) {
         currentDate = date
+        todos.removeAll()
         db.setQuery(from: date, to: date)
     }
 
