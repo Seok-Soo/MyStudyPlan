@@ -28,6 +28,7 @@ class ScheduleViewController: UIViewController, FSCalendarDelegate, FSCalendarDa
 
         selectedDate = getToday()
 
+        // Firestore에서 Todo 전부 불러오기
         DbFirebase(parentNotification: { [weak self] data, action in
             guard let self = self,
                   let data = data,
@@ -43,8 +44,11 @@ class ScheduleViewController: UIViewController, FSCalendarDelegate, FSCalendarDa
 
             self.allTodos.append(item)
             self.updateTodoList(for: self.selectedDate)
+            self.calendar.reloadData()  // 🔄 일정 반영을 위해 달력 갱신
         }).setQueryAll()
     }
+
+    // MARK: - FSCalendar Delegate
 
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
         let formatter = DateFormatter()
@@ -52,6 +56,16 @@ class ScheduleViewController: UIViewController, FSCalendarDelegate, FSCalendarDa
         selectedDate = formatter.string(from: date)
         updateTodoList(for: selectedDate)
     }
+
+    func calendar(_ calendar: FSCalendar, numberOfEventsFor date: Date) -> Int {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd"
+        let dateString = formatter.string(from: date)
+        let matches = allTodos.filter { $0.date == dateString }
+        return matches.isEmpty ? 0 : 1
+    }
+
+    // MARK: - Helpers
 
     func updateTodoList(for date: String) {
         filteredTodos = allTodos.filter { $0.date == date }
@@ -64,7 +78,7 @@ class ScheduleViewController: UIViewController, FSCalendarDelegate, FSCalendarDa
         return formatter.string(from: Date())
     }
 
-    // MARK: - TableView DataSource
+    // MARK: - TableView
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredTodos.count
