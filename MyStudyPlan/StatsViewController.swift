@@ -51,17 +51,26 @@ class StatsViewController: UIViewController {
         }
 
         let dataSet = BarChartDataSet(entries: entries)
-        dataSet.label = "공부 시간 (분)"
-        dataSet.colors = [.systemBlue]
+        dataSet.label = nil
+        dataSet.colors = [UIColor.systemIndigo]
+        dataSet.valueColors = [.clear]
 
         let data = BarChartData(dataSet: dataSet)
-        data.setValueFont(.systemFont(ofSize: 12))
+
         barChartView.data = data
         barChartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: viewModel.groupedStats.map { $0.label })
         barChartView.xAxis.labelPosition = .bottom
-        barChartView.xAxis.granularity = 1
-        barChartView.notifyDataSetChanged()
+        barChartView.xAxis.labelFont = .systemFont(ofSize: 13, weight: .medium)
+        barChartView.xAxis.labelTextColor = .darkGray
+        barChartView.xAxis.drawGridLinesEnabled = false
+
+        barChartView.leftAxis.enabled = false
+        barChartView.rightAxis.enabled = false
+        barChartView.legend.enabled = false
+        barChartView.animate(yAxisDuration: 0.6)
+        barChartView.noDataText = "기록된 데이터가 없습니다"
 
         totalLabel.text = "총 공부 시간: \(viewModel.totalTimeFormatted())"
     }
+
 }
