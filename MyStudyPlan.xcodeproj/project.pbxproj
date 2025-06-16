@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A33652B42E00724000452FCA /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = A33652B32E00724000452FCA /* FSCalendar */; };
 		A3BA54602DFD42C60060D1F9 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = A3BA545F2DFD42C60060D1F9 /* FirebaseFirestore */; };
 		A3BA54622DFD42CE0060D1F9 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = A3BA54612DFD42CE0060D1F9 /* FirebaseStorage */; };
 		A3BA54732E005A2C0060D1F9 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = A3BA54722E005A2C0060D1F9 /* DGCharts */; };
@@ -43,6 +44,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A3BA54602DFD42C60060D1F9 /* FirebaseFirestore in Frameworks */,
+				A33652B42E00724000452FCA /* FSCalendar in Frameworks */,
 				A3BA54732E005A2C0060D1F9 /* DGCharts in Frameworks */,
 				A3BA54622DFD42CE0060D1F9 /* FirebaseStorage in Frameworks */,
 			);
@@ -99,6 +101,7 @@
 				A3BA54612DFD42CE0060D1F9 /* FirebaseStorage */,
 				A3BA54722E005A2C0060D1F9 /* DGCharts */,
 				A3BA54742E005A2C0060D1F9 /* DGChartsDynamic */,
+				A33652B32E00724000452FCA /* FSCalendar */,
 			);
 			productName = MyStudyPlan;
 			productReference = A3A0DB652DFC21BC00650BB0 /* MyStudyPlan.app */;
@@ -131,6 +134,7 @@
 			packageReferences = (
 				A3BA545D2DFD42710060D1F9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				A3BA54712E005A2C0060D1F9 /* XCRemoteSwiftPackageReference "Charts" */,
+				A33652B22E00724000452FCA /* XCRemoteSwiftPackageReference "FSCalendar" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = A3A0DB662DFC21BC00650BB0 /* Products */;
@@ -362,6 +366,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		A33652B22E00724000452FCA /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/WenchaoD/FSCalendar";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.4;
+			};
+		};
 		A3BA545D2DFD42710060D1F9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -381,6 +393,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		A33652B32E00724000452FCA /* FSCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A33652B22E00724000452FCA /* XCRemoteSwiftPackageReference "FSCalendar" */;
+			productName = FSCalendar;
+		};
 		A3BA545F2DFD42C60060D1F9 /* FirebaseFirestore */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A3BA545D2DFD42710060D1F9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

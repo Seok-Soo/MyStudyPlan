@@ -27,7 +27,7 @@
         <!--Settings-->
         <scene sceneID="z0s-qW-GDE">
             <objects>
-                <viewController title="Settings" id="ODA-6Y-1XO" customClass="FocusViewController" customModule="MyStudyPlan" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Settings" id="ODA-6Y-1XO" customClass="SettingsViewController" customModule="MyStudyPlan" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nCW-kf-ceP">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -252,18 +252,34 @@
         <!--Schedule-->
         <scene sceneID="iz0-NG-1yE">
             <objects>
-                <viewController title="Schedule" id="qrY-XK-9ve" customClass="SettingsViewController" customModule="MyStudyPlan" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Schedule" id="qrY-XK-9ve" customClass="ScheduleViewController" customModule="MyStudyPlan" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XFW-nK-slJ">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4WT-qu-Vcg" customClass="FSCalendar">
+                                <rect key="frame" x="16" y="118" width="361" height="371"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="ZRU-yt-XrS">
+                                <rect key="frame" x="16" y="497" width="361" height="228"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="9Vi-bZ-Bvn"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Schedule" image="calendar" catalog="system" id="0Nc-nK-nwd"/>
+                    <connections>
+                        <outlet property="calendar" destination="4WT-qu-Vcg" id="GXy-rh-kH2"/>
+                        <outlet property="tableView" destination="ZRU-yt-XrS" id="Tfa-Pa-snX"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zgK-6n-4zH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3450" y="-575"/>
+            <point key="canvasLocation" x="3449.6183206106871" y="-575.35211267605632"/>
         </scene>
     </scenes>
     <resources>

@@ -47,9 +47,20 @@ class StatsViewModel {
             grouped[label, default: 0] += duration
         }
 
-        groupedStats = grouped
-            .sorted(by: { $0.key < $1.key })
-            .map { (label: $0.key, totalSeconds: $0.value) }    }
+        if scope == .week {
+            let weekdays = ["일", "월", "화", "수", "목", "금", "토"]
+            groupedStats = weekdays.map { label in
+                (label: label, totalSeconds: grouped[label, default: 0])
+            }
+        } else {
+            // ⚠️ 실제 존재하는 주차만 추출
+            let sortedLabels = grouped.keys.sorted { $0 < $1 } // "1주차", "2주차", ...
+            groupedStats = sortedLabels.map { label in
+                (label: label, totalSeconds: grouped[label] ?? 0)
+            }
+        }
+    }
+
 
     private func weekdayLabel(from date: Date) -> String {
         let weekdaySymbols = ["일", "월", "화", "수", "목", "금", "토"]
@@ -60,6 +71,12 @@ class StatsViewModel {
     private func weekOfMonthLabel(from date: Date) -> String {
         let week = calendar.component(.weekOfMonth, from: date)
         return "\(week)주차"
+    }
+
+    private func numberOfWeeksInCurrentMonth() -> Int {
+        let today = Date()
+        guard let range = calendar.range(of: .weekOfMonth, in: .month, for: today) else { return 0 }
+        return range.count
     }
 
     func totalTimeFormatted() -> String {
