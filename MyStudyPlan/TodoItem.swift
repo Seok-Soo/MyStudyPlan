@@ -10,5 +10,7 @@ import Foundation
 struct TodoItem {
     let id: String
     var title: String
-    var isDone: Bool
+    var status: String
+    var date: String
+    var duration: Int
 }
