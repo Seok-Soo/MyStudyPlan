@@ -26,6 +26,7 @@ class TodoViewModel {
     }
 
     func handleReceive(data: [String: Any]?, action: DbAction?) {
+        print("📩 Received: \(String(describing: data)) | Action: \(String(describing: action))")
         guard let data = data,
               let id = data["id"] as? String else { return }
 

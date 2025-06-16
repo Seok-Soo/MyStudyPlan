@@ -37,6 +37,7 @@ class DbFirebase: Database {
     }
 
     func onChangingData(querySnapshot: QuerySnapshot?, error: Error?) {
+        print("📡 onChangingData triggered")
         guard let querySnapshot = querySnapshot else { return }
         if querySnapshot.documentChanges.isEmpty { return }
 
