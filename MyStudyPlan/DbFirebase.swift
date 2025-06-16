@@ -49,6 +49,11 @@ class DbFirebase: Database {
     func onChangingData(querySnapshot: QuerySnapshot?, error: Error?) {
         // 이것은 setQuery의 결과로 호출된다.
         // 당연히 별도 스레드에서 실행되므로 GUI를 직접 변경하면 안 된다.
+        
+        if let error = error {
+            print("Firestore 에러 발생: \(error.localizedDescription)")
+            return
+        }
 
         guard let querySnapshot = querySnapshot else { return } // 이 경우는 거의 발생하지 않음
 
