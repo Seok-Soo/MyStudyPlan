@@ -57,4 +57,13 @@ class DbFirebase: Database {
             parentNotification?(dict, action)
         }
     }
+    
+    func setQueryAll() {
+        if let query = existQuery {
+            query.remove()
+        }
+
+        // 필터 없이 전체 todos 가져오기
+        existQuery = reference.addSnapshotListener(onChangingData)
+    }
 }
