@@ -7,40 +7,65 @@
 
 import Foundation
 
+enum StatsScope {
+    case week, month
+}
+
 class StatsViewModel {
-    
-    private(set) var dailyStats: [(date: String, totalDuration: Int)] = []
     private let calendar = Calendar.current
-    private let formatter: DateFormatter = {
-        let f = DateFormatter()
-        f.dateFormat = "yyyy-MM-dd"
-        return f
-    }()
+    private let formatter = DateFormatter()
     
-    // 외부에서 Firebase로부터 todos를 받아 처리
-    func processTodos(_ todos: [TodoItem]) {
-        let filtered = todos.filter { isWithinLast7Days(dateString: $0.date) }
+    private(set) var groupedStats: [(label: String, totalSeconds: Int)] = []
+    
+    init() {
+        formatter.dateFormat = "yyyy-MM-dd"
+    }
+
+    func process(todos: [TodoItem], scope: StatsScope) {
+        groupedStats = []
+
+        let validTodos = todos.compactMap { item -> (date: Date, duration: Int)? in
+            guard let date = formatter.date(from: item.date) else { return nil }
+            return (date: date, duration: item.duration)
+        }
+
+        let filtered = validTodos.filter { entry in
+            switch scope {
+            case .week:
+                return calendar.isDate(entry.date, equalTo: Date(), toGranularity: .weekOfYear)
+            case .month:
+                return calendar.isDate(entry.date, equalTo: Date(), toGranularity: .month)
+            }
+        }
 
         var grouped: [String: Int] = [:]
-        for todo in filtered {
-            grouped[todo.date, default: 0] += todo.duration
+
+        for (date, duration) in filtered {
+            let label = scope == .week
+                ? weekdayLabel(from: date)
+                : weekOfMonthLabel(from: date)
+            grouped[label, default: 0] += duration
         }
-        
-        // 정렬
-        dailyStats = grouped
-            .map { ($0.key, $0.value) }
-            .sorted { $0.0 < $1.0 }
+
+        groupedStats = grouped
+            .sorted(by: { $0.key < $1.key })
+            .map { (label: $0.key, totalSeconds: $0.value) }    }
+
+    private func weekdayLabel(from date: Date) -> String {
+        let weekdaySymbols = ["일", "월", "화", "수", "목", "금", "토"]
+        let weekday = calendar.component(.weekday, from: date)
+        return weekdaySymbols[weekday - 1]
     }
 
-    private func isWithinLast7Days(dateString: String) -> Bool {
-        guard let date = formatter.date(from: dateString) else { return false }
-        guard let sevenDaysAgo = calendar.date(byAdding: .day, value: -6, to: Date()) else { return false }
-        return date >= sevenDaysAgo && date <= Date()
+    private func weekOfMonthLabel(from date: Date) -> String {
+        let week = calendar.component(.weekOfMonth, from: date)
+        return "\(week)주차"
     }
 
-    func durationString(from seconds: Int) -> String {
-        let hours = seconds / 3600
-        let minutes = (seconds % 3600) / 60
-        return "\(hours)시간 \(minutes)분"
+    func totalTimeFormatted() -> String {
+        let total = groupedStats.map { $0.totalSeconds }.reduce(0, +)
+        let hours = total / 3600
+        let mins = (total % 3600) / 60
+        return "\(hours)시간 \(mins)분"
     }
 }

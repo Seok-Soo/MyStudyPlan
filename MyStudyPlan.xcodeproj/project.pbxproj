@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		A3BA54602DFD42C60060D1F9 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = A3BA545F2DFD42C60060D1F9 /* FirebaseFirestore */; };
 		A3BA54622DFD42CE0060D1F9 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = A3BA54612DFD42CE0060D1F9 /* FirebaseStorage */; };
+		A3BA54732E005A2C0060D1F9 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = A3BA54722E005A2C0060D1F9 /* DGCharts */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A3BA54602DFD42C60060D1F9 /* FirebaseFirestore in Frameworks */,
+				A3BA54732E005A2C0060D1F9 /* DGCharts in Frameworks */,
 				A3BA54622DFD42CE0060D1F9 /* FirebaseStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -95,6 +97,8 @@
 			packageProductDependencies = (
 				A3BA545F2DFD42C60060D1F9 /* FirebaseFirestore */,
 				A3BA54612DFD42CE0060D1F9 /* FirebaseStorage */,
+				A3BA54722E005A2C0060D1F9 /* DGCharts */,
+				A3BA54742E005A2C0060D1F9 /* DGChartsDynamic */,
 			);
 			productName = MyStudyPlan;
 			productReference = A3A0DB652DFC21BC00650BB0 /* MyStudyPlan.app */;
@@ -126,6 +130,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				A3BA545D2DFD42710060D1F9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				A3BA54712E005A2C0060D1F9 /* XCRemoteSwiftPackageReference "Charts" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = A3A0DB662DFC21BC00650BB0 /* Products */;
@@ -365,6 +370,14 @@
 				minimumVersion = 11.14.0;
 			};
 		};
+		A3BA54712E005A2C0060D1F9 /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -377,6 +390,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A3BA545D2DFD42710060D1F9 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		A3BA54722E005A2C0060D1F9 /* DGCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A3BA54712E005A2C0060D1F9 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGCharts;
+		};
+		A3BA54742E005A2C0060D1F9 /* DGChartsDynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A3BA54712E005A2C0060D1F9 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = DGChartsDynamic;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
