@@ -6,20 +6,19 @@ class TodoAddViewController: UIViewController {
     @IBOutlet weak var titleField: UITextField!
     @IBOutlet weak var dateTextField: UITextField!
     @IBOutlet weak var statusSegment: UISegmentedControl!
+    @IBOutlet weak var durationField: UITextField! // ✅ 추가: 공부 시간(분) 입력
 
-    // 내부 datePicker
     let datePicker = UIDatePicker()
-
-    // 콜백
     var onAddTodo: ((TodoItem) -> Void)?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupDatePicker()
         setupSegmentStyle()
+        setupDefaultDuration()
     }
 
-    // MARK: - 날짜 Picker 설정
+    // MARK: - 날짜 Picker
     func setupDatePicker() {
         datePicker.datePickerMode = .date
         datePicker.preferredDatePickerStyle = .wheels
@@ -41,7 +40,7 @@ class TodoAddViewController: UIViewController {
         view.endEditing(true)
     }
 
-    // MARK: - 세그먼트 스타일 설정
+    // MARK: - 상태 세그먼트
     func setupSegmentStyle() {
         statusSegment.removeAllSegments()
         let statuses = ["시작전", "진행중", "완료"]
@@ -50,16 +49,23 @@ class TodoAddViewController: UIViewController {
         }
         statusSegment.selectedSegmentIndex = 0
 
-        // 선택된 항목 스타일
         statusSegment.selectedSegmentTintColor = .systemBlue
         statusSegment.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
         statusSegment.setTitleTextAttributes([.foregroundColor: UIColor.gray], for: .normal)
+    }
+
+    // MARK: - 기본 공부 시간
+    func setupDefaultDuration() {
+        durationField.text = "60" // 분 단위로 기본값
+        durationField.keyboardType = .numberPad
     }
 
     // MARK: - 저장
     @IBAction func didTapSave(_ sender: UIButton) {
         guard let title = titleField.text,
               let date = dateTextField.text,
+              let durationText = durationField.text,
+              let durationMinutes = Int(durationText),
               !title.isEmpty, !date.isEmpty else { return }
 
         let selectedStatus = statusSegment.titleForSegment(at: statusSegment.selectedSegmentIndex) ?? "시작전"
@@ -69,7 +75,7 @@ class TodoAddViewController: UIViewController {
             title: title,
             status: selectedStatus,
             date: date,
-            duration: 3600 // 기본값: 1시간
+            duration: durationMinutes * 60 // ✅ 분 → 초 변환
         )
 
         onAddTodo?(newTodo)
@@ -80,4 +86,3 @@ class TodoAddViewController: UIViewController {
         dismiss(animated: true)
     }
 }
-	
