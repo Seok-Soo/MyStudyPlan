@@ -59,12 +59,20 @@ class TodoViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func didTapPrevDate(_ sender: UIButton) {
         currentDate = Calendar.current.date(byAdding: .day, value: -1, to: currentDate)!
         updateDateLabel()
+        
+        viewModel.todos = []
+        tableView.reloadData()
+        
         viewModel.startListening(for: dateString(from: currentDate))
     }
 
     @IBAction func didTapNextDate(_ sender: UIButton) {
         currentDate = Calendar.current.date(byAdding: .day, value: 1, to: currentDate)!
         updateDateLabel()
+        
+        viewModel.todos = []
+        tableView.reloadData()
+        
         viewModel.startListening(for: dateString(from: currentDate))
     }
 
