@@ -1,10 +1,3 @@
-//
-//  TodoViewController.swift
-//  MyStudyPlan
-//
-//  Created by 석종수 on 6/13/25.
-//
-
 import UIKit
 
 class TodoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
@@ -12,7 +5,7 @@ class TodoViewController: UIViewController, UITableViewDelegate, UITableViewData
     // MARK: - IBOutlet 연결
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var addButton: UIButton!  // ✅ 추가: 동그란 버튼 연결
+    @IBOutlet weak var addButton: UIButton!
 
     // MARK: - 날짜 관련
     var currentDate: Date = Date()
@@ -33,6 +26,7 @@ class TodoViewController: UIViewController, UITableViewDelegate, UITableViewData
 
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.separatorStyle = .none  // ✅ 구분선 제거
 
         viewModel.onUpdate = {
             DispatchQueue.main.async {
@@ -44,7 +38,6 @@ class TodoViewController: UIViewController, UITableViewDelegate, UITableViewData
         viewModel.startListening(for: dateString(from: currentDate))
     }
 
-    // ✅ 추가: 버튼을 동그랗게
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         addButton.layer.cornerRadius = addButton.frame.size.width / 2
@@ -59,20 +52,16 @@ class TodoViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func didTapPrevDate(_ sender: UIButton) {
         currentDate = Calendar.current.date(byAdding: .day, value: -1, to: currentDate)!
         updateDateLabel()
-        
         viewModel.todos = []
         tableView.reloadData()
-        
         viewModel.startListening(for: dateString(from: currentDate))
     }
 
     @IBAction func didTapNextDate(_ sender: UIButton) {
         currentDate = Calendar.current.date(byAdding: .day, value: 1, to: currentDate)!
         updateDateLabel()
-        
         viewModel.todos = []
         tableView.reloadData()
-        
         viewModel.startListening(for: dateString(from: currentDate))
     }
 
@@ -89,13 +78,10 @@ class TodoViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBAction func didTapAddButton(_ sender: UIButton) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let addVC = storyboard.instantiateViewController(withIdentifier: "TodoAddViewController") as? TodoAddViewController {
-
-            // ✅ iOS 기본 Bottom Sheet 스타일
             if let sheet = addVC.sheetPresentationController {
                 sheet.detents = [.custom(resolver: { _ in return UIScreen.main.bounds.height })]
                 sheet.prefersGrabberVisible = false
             }
-
             addVC.onAddTodo = { [weak self] newTodo in
                 self?.viewModel.addTodo(item: newTodo)
             }
@@ -104,8 +90,30 @@ class TodoViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     // MARK: - TableView Methods
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.todos.count
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
+    }
+
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        // ✅ 셀 간 간격 & 둥글게
+        let margin: CGFloat = 16
+        let bgView = UIView(
+            frame: CGRect(
+                x: margin,
+                y: margin / 2,
+                width: tableView.bounds.width - margin * 2,
+                height: cell.bounds.height - margin
+            )
+        )
+        bgView.backgroundColor = UIColor(red: 37/255, green: 56/255, blue: 71/255, alpha: 1.0)
+        bgView.layer.cornerRadius = 10
+        cell.backgroundView = bgView
+        cell.backgroundColor = .clear
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -115,7 +123,13 @@ class TodoViewController: UIViewController, UITableViewDelegate, UITableViewData
         var content = cell.defaultContentConfiguration()
         content.text = todo.title
         content.secondaryText = "상태: \(todo.status)"
+        content.textProperties.color = .white
+        content.secondaryTextProperties.color = .white
+        content.textProperties.font = .systemFont(ofSize: 18, weight: .semibold)
+        content.secondaryTextProperties.font = .systemFont(ofSize: 14)
+
         cell.contentConfiguration = content
+        cell.selectionStyle = .none
 
         return cell
     }
