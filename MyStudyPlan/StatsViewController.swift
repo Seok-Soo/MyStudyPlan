@@ -69,7 +69,7 @@ class StatsViewController: UIViewController {
         barChartView.xAxis.labelPosition = .bottom
         barChartView.xAxis.labelFont = .systemFont(ofSize: 13, weight: .medium)
         barChartView.xAxis.labelTextColor = .darkGray
-        barChartView.xAxis.labelRotationAngle = -20
+//        barChartView.xAxis.labelRotationAngle = -20
         barChartView.xAxis.drawGridLinesEnabled = false
         barChartView.xAxis.granularity = 1
         barChartView.xAxis.granularityEnabled = true
