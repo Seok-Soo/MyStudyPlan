@@ -1,14 +1,20 @@
+//
+//  TodoViewController.swift
+//  MyStudyPlan
+//
+//  Created by 석종수 on 6/13/25.
+//
+
 import UIKit
 
 class TodoViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    // MARK: - IBOutlet 연결
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var addButton: UIButton!
 
-    // MARK: - 날짜 관련
     var currentDate: Date = Date()
+    var viewModel = TodoViewModel()
 
     let formatter: DateFormatter = {
         let f = DateFormatter()
@@ -17,16 +23,12 @@ class TodoViewController: UIViewController, UITableViewDelegate, UITableViewData
         return f
     }()
 
-    // MARK: - 뷰모델
-    var viewModel = TodoViewModel()
-
-    // MARK: - 생명 주기
     override func viewDidLoad() {
         super.viewDidLoad()
 
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.separatorStyle = .none  // ✅ 구분선 제거
+        tableView.separatorStyle = .none  // ✅ 셀 구분선 제거
 
         viewModel.onUpdate = {
             DispatchQueue.main.async {
@@ -48,7 +50,6 @@ class TodoViewController: UIViewController, UITableViewDelegate, UITableViewData
         addButton.backgroundColor = .systemIndigo
     }
 
-    // MARK: - 날짜 이동 액션
     @IBAction func didTapPrevDate(_ sender: UIButton) {
         currentDate = Calendar.current.date(byAdding: .day, value: -1, to: currentDate)!
         updateDateLabel()
@@ -89,26 +90,41 @@ class TodoViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
 
-    // MARK: - TableView Methods
+    // MARK: - UITableView 구성
+
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return viewModel.todos.count
+    }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.todos.count
+        return 1  // 각 섹션에 셀 하나
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
 
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 16  // 셀 위 여백
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        return UIView()  // 투명 헤더 뷰
+    }
+
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 8  // 셀 아래 여백
+    }
+
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        return UIView()
+    }
+
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        // ✅ 셀 간 간격 & 둥글게
+        // ✅ 셀 배경 + 둥근 모서리
         let margin: CGFloat = 16
         let bgView = UIView(
-            frame: CGRect(
-                x: margin,
-                y: margin / 2,
-                width: tableView.bounds.width - margin * 2,
-                height: cell.bounds.height - margin
-            )
+            frame: CGRect(x: margin, y: 0, width: tableView.bounds.width - margin * 2, height: cell.bounds.height)
         )
         bgView.backgroundColor = UIColor(red: 37/255, green: 56/255, blue: 71/255, alpha: 1.0)
         bgView.layer.cornerRadius = 10
@@ -117,7 +133,7 @@ class TodoViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let todo = viewModel.todos[indexPath.row]
+        let todo = viewModel.todos[indexPath.section]
         let cell = tableView.dequeueReusableCell(withIdentifier: "TodoCell", for: indexPath)
 
         var content = cell.defaultContentConfiguration()
@@ -135,7 +151,7 @@ class TodoViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let todo = viewModel.todos[indexPath.row]
+        let todo = viewModel.todos[indexPath.section]
         let nextStatus = nextStatusFor(current: todo.status)
         viewModel.updateStatus(for: todo, to: nextStatus)
     }
@@ -150,7 +166,7 @@ class TodoViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            let todo = viewModel.todos[indexPath.row]
+            let todo = viewModel.todos[indexPath.section]
             viewModel.deleteTodo(todo)
         }
     }
