@@ -73,7 +73,7 @@ class StatsViewController: UIViewController {
         barChartView.xAxis.drawGridLinesEnabled = false
         barChartView.xAxis.granularity = 1
         barChartView.xAxis.granularityEnabled = true
-        barChartView.xAxis.setLabelCount(labels.count, force: true)
+//        barChartView.xAxis.setLabelCount(labels.count, force: true)
 
         barChartView.leftAxis.enabled = false
         barChartView.rightAxis.enabled = false
