@@ -92,8 +92,8 @@ class TodoViewController: UIViewController, UITableViewDelegate, UITableViewData
 
             // ✅ iOS 기본 Bottom Sheet 스타일
             if let sheet = addVC.sheetPresentationController {
-                sheet.detents = [.medium(), .large()]
-                sheet.prefersGrabberVisible = true
+                sheet.detents = [.custom(resolver: { _ in return UIScreen.main.bounds.height })]
+                sheet.prefersGrabberVisible = false
             }
 
             addVC.onAddTodo = { [weak self] newTodo in

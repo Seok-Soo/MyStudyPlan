@@ -53,10 +53,11 @@ class StatsViewModel {
                 (label: label, totalSeconds: grouped[label, default: 0])
             }
         } else {
-            // ⚠️ 실제 존재하는 주차만 추출
-            let sortedLabels = grouped.keys.sorted { $0 < $1 } // "1주차", "2주차", ...
-            groupedStats = sortedLabels.map { label in
-                (label: label, totalSeconds: grouped[label] ?? 0)
+            // ✅ 월간은 현재 달의 주차 수만큼 라벨 고정 생성
+            let weekCount = numberOfWeeksInCurrentMonth()
+            let labels = (1...weekCount).map { "\($0)주차" }
+            groupedStats = labels.map { label in
+                (label: label, totalSeconds: grouped[label, default: 0])
             }
         }
     }
