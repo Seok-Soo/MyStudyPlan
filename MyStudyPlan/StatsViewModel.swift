@@ -14,18 +14,17 @@ enum StatsScope {
 class StatsViewModel {
     private let calendar = Calendar.current
     private let formatter = DateFormatter()
-    
     private(set) var groupedStats: [(label: String, totalSeconds: Int)] = []
-    private var validTodos: [(date: Date, duration: Int)] = []
-    
+    private(set) var todos: [TodoItem] = []
+
     init() {
         formatter.dateFormat = "yyyy-MM-dd"
     }
 
     func process(todos: [TodoItem], scope: StatsScope) {
+        self.todos = todos
         groupedStats = []
-
-        validTodos = todos.compactMap { item -> (date: Date, duration: Int)? in
+        let validTodos = todos.compactMap { item -> (date: Date, duration: Int)? in
             guard let date = formatter.date(from: item.date) else { return nil }
             return (date: date, duration: item.duration)
         }
@@ -40,52 +39,35 @@ class StatsViewModel {
         }
 
         var grouped: [String: Int] = [:]
-
         for (date, duration) in filtered {
-            let label = scope == .week
-                ? weekdayLabel(from: date)
-                : weekOfMonthLabel(from: date)
+            let label = scope == .week ? weekdayLabel(from: date) : weekOfMonthLabel(from: date)
             grouped[label, default: 0] += duration
         }
 
         if scope == .week {
             let weekdays = ["일", "월", "화", "수", "목", "금", "토"]
-            groupedStats = weekdays.map { label in
-                (label: label, totalSeconds: grouped[label, default: 0])
-            }
+            groupedStats = weekdays.map { label in (label: label, totalSeconds: grouped[label, default: 0]) }
         } else {
             let weekCount = numberOfWeeksInCurrentMonth()
             let labels = (1...weekCount).map { "\($0)주차" }
-            groupedStats = labels.map { label in
-                (label: label, totalSeconds: grouped[label, default: 0])
-            }
+            groupedStats = labels.map { label in (label: label, totalSeconds: grouped[label, default: 0]) }
         }
     }
 
-    // ✅ 증감 계산 함수
-    func calculateDifference(scope: StatsScope) -> Int {
-        switch scope {
-        case .week:
-            return compareWeek(offset: 0) - compareWeek(offset: -1)
-        case .month:
-            return compareMonth(offset: 0) - compareMonth(offset: -1)
-        }
-    }
-
-    private func compareWeek(offset: Int) -> Int {
+    func compareWeek(offset: Int) -> Int {
         guard let targetDate = calendar.date(byAdding: .weekOfYear, value: offset, to: Date()) else { return 0 }
-        let filtered = validTodos.filter {
-            calendar.isDate($0.date, equalTo: targetDate, toGranularity: .weekOfYear)
-        }
-        return filtered.map { $0.duration }.reduce(0, +)
+        return todos.filter {
+            guard let date = formatter.date(from: $0.date) else { return false }
+            return calendar.isDate(date, equalTo: targetDate, toGranularity: .weekOfYear)
+        }.map { $0.duration }.reduce(0, +)
     }
 
-    private func compareMonth(offset: Int) -> Int {
-        guard let targetDate = calendar.date(byAdding: .month, value: offset, to: Date()) else { return 0 }
-        let filtered = validTodos.filter {
-            calendar.isDate($0.date, equalTo: targetDate, toGranularity: .month)
-        }
-        return filtered.map { $0.duration }.reduce(0, +)
+    func compareDay(offset: Int) -> Int {
+        guard let targetDate = calendar.date(byAdding: .day, value: offset, to: Date()) else { return 0 }
+        return todos.filter {
+            guard let date = formatter.date(from: $0.date) else { return false }
+            return calendar.isDate(date, equalTo: targetDate, toGranularity: .day)
+        }.map { $0.duration }.reduce(0, +)
     }
 
     private func weekdayLabel(from date: Date) -> String {
@@ -109,7 +91,6 @@ class StatsViewModel {
         let total = groupedStats.map { $0.totalSeconds }.reduce(0, +)
         let hours = total / 3600
         let mins = (total % 3600) / 60
-        
         if hours > 0 && mins > 0 {
             return "\(hours)시간 \(mins)분"
         } else if hours > 0 {

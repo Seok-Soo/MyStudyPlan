@@ -118,7 +118,14 @@ class StatsViewController: UIViewController {
 
         totalLabel.text = "총 공부 시간: \(viewModel.totalTimeFormatted())"
 
-        let diff = viewModel.calculateDifference(scope: scope)
+        let diff: Int
+        if scope == .week {
+            diff = viewModel.compareDay(offset: 0) - viewModel.compareDay(offset: -1)
+        } else {
+            diff = viewModel.compareWeek(offset: 0) - viewModel.compareWeek(offset: -1)
+        }
+
+        
         if diff == 0 {
             compareLabel.text = ""
         } else if diff > 0 {
