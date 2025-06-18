@@ -25,7 +25,7 @@ class ScheduleViewController: UIViewController, FSCalendarDelegate, FSCalendarDa
 
         // ✨ 달력 외형 설정 (선택)
         calendar.appearance.headerDateFormat = "YYYY년 M월"
-        calendar.appearance.headerTitleColor = .black
+        calendar.appearance.headerTitleColor = .white
         calendar.appearance.weekdayTextColor = .darkGray
         calendar.appearance.selectionColor = .systemIndigo
         calendar.appearance.todayColor = .lightGray
@@ -33,9 +33,7 @@ class ScheduleViewController: UIViewController, FSCalendarDelegate, FSCalendarDa
 
         tableView.delegate = self
         tableView.dataSource = self
-
-        selectedDate = getToday()
-
+        
         // 🔄 Firestore에서 Todo 불러오기
         DbFirebase(parentNotification: { [weak self] data, action in
             guard let self = self,
@@ -54,6 +52,20 @@ class ScheduleViewController: UIViewController, FSCalendarDelegate, FSCalendarDa
             self.updateTodoList(for: self.selectedDate)
             self.calendar.reloadData()
         }).setQueryAll()
+
+        selectedDate = getToday()
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        // ✅ 테이블뷰 둥글게 만들기
+        tableView.layer.cornerRadius = 15
+        tableView.clipsToBounds = true
+        
+        // ✅ 달력 둥글게 만들기
+        calendar.layer.cornerRadius = 15
+        calendar.clipsToBounds = true
     }
 
     // MARK: - FSCalendar Delegate
@@ -75,9 +87,9 @@ class ScheduleViewController: UIViewController, FSCalendarDelegate, FSCalendarDa
     func calendar(_ calendar: FSCalendar, appearance: FSCalendarAppearance, titleDefaultColorFor date: Date) -> UIColor? {
         let weekday = Calendar.current.component(.weekday, from: date)
         switch weekday {
-        case 1: return .red    // 일요일
-        case 7: return .blue   // 토요일
-        default: return .black // 평일
+        case 1: return .red
+        case 7: return .blue
+        default: return .white
         }
     }
 
@@ -102,9 +114,31 @@ class ScheduleViewController: UIViewController, FSCalendarDelegate, FSCalendarDa
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let todo = filteredTodos[indexPath.row]
+        
+        // ✅ 커스텀 셀 생성
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "TodoCell")
         cell.textLabel?.text = todo.title
         cell.detailTextLabel?.text = "\(todo.status) • \(todo.duration)분"
+        // ✅ 셀 속성 커스터마이징
+        cell.textLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+        cell.textLabel?.textColor = .white
+        
+        cell.detailTextLabel?.font = UIFont.systemFont(ofSize: 14)
+        cell.detailTextLabel?.textColor = .lightGray
+
+        cell.contentView.backgroundColor = UIColor(red: 37/255, green: 56/255, blue: 71/255, alpha: 1.0)
+        cell.contentView.layer.cornerRadius = 10
+        cell.contentView.clipsToBounds = true
+        
+        // 셀 전체 배경 투명하게
+        cell.backgroundColor = .clear
+        
+        // ✅ 선택 효과 커스텀 추가
+        let selectedView = UIView()
+        selectedView.backgroundColor = UIColor.systemIndigo.withAlphaComponent(0.2)
+        selectedView.layer.cornerRadius = 10
+        selectedView.clipsToBounds = true
+        cell.selectedBackgroundView = selectedView
         return cell
     }
 }
