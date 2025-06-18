@@ -1,57 +1,110 @@
-MyStudyPlan
-
-🔄 프로젝트 소개
-
-MyStudyPlan 은 자신의 공부량을 시간 단위로 기록하고 시각화할 수 있는 앱입니다. 공부한 시간을 기록하며 성취감을 얻고, 꾸준한 학습 습관 형성을 돕습니다.
-
-🌐 기술 스택
-
-언어: Swift
-
-IDE: Xcode
-
-백엔드: Firebase
-
-🔧 주요 기능
-
-공부 세션 기록 (시작/종료 시간 기록)
-
-일별/주별/월별 공부량 통계 제공
-
-사용자 사진 첨부 (공부 환경, 노트 등)
-
-알림 및 목표 설정 기능 (예정)
-
-📸 스크린샷
-
-여기에 앱 스크린샷 이미지를 삽입하세요
+## 2025 한성대학교 컴퓨터공학부 캡스톤 디자인 8조 - AIDEO
+![splash](https://github.com/user-attachments/assets/bc6556cc-a2d6-47ef-839a-f309c808e4ad)
 
 
+## 프로젝트 개요
 
-🔗 결과물 링크
+시간별 일정 관리 앱
 
-여기에 앱스토어 링크, 배포 링크 등을 삽입하세요
+<br><br>
 
-앱 다운로드 링크
+## 프로젝트 설명
 
-⚖️ 설치 및 실행 방법
+MyStudyPlan은 자신의 공부량을 시간 단위로 기록하고 시각화하여 성취감을 높이고, 꾸준한 학습 습관 형성을 돕는 모바일 앱입니다.
 
-이 저장소를 클론합니다.
+<br><br>
 
-git clone https://github.com/your-username/MyStudyPlan.git
 
-Xcode에서 프로젝트 열기
+## 주요 기능
 
-Firebase 프로젝트 생성 및 설정 파일 추가 (GoogleService-Info.plist)
+<table>
+  <tr>
+    <td align="center" valign="top">
+      <b>1. 로그인</b><br>
+      ─────────────<br>
+      <img src="https://github.com/user-attachments/assets/43d06230-61b0-4d85-a7f6-3e8a004b14c2" width="200"/><br>
+      ─────────────<br>
+      앱 자체 로그인 또는 소셜 로그인
+    </td>
+    <td align="center" valign="top">
+      <b>2. 게시판</b><br>
+      ─────────────<br>
+      <img src="https://github.com/user-attachments/assets/59f66a2e-55cb-46d4-8040-577e080389ef" width="200"/><br>
+      ─────────────<br>
+      다른 사용자와 앱을 통해 생성한 숏폼 공유
+    </td>
+    <td align="center" valign="top">
+      <b>3. 해시태그 검색</b><br>
+      ─────────────<br>
+      <img src="https://github.com/user-attachments/assets/6c439cc6-d165-4584-8ffd-bdcaab9a5b0f" width="200"/><br>
+      ─────────────<br>
+      게시물에 저장된 해시태그 값에 따라 검색
+    </td>
+  </tr>
+  <tr>
+    <td align="center" valign="top">
+      <b>4. 숏폼 소스 입력 (1)</b><br>
+      ─────────────<br>
+      <img src="https://github.com/user-attachments/assets/10fff1f6-eafa-4fad-9f1f-2eb2f39511b0" width="200"/><br>
+      ─────────────<br>
+      사용자가 직접 이미지 + 자막 입력
+    </td>
+    <td align="center" valign="top">
+      <b>5. 숏폼 소스 입력 (2)</b><br>
+      ─────────────<br>
+      <img src="https://github.com/user-attachments/assets/96d68b8d-0d04-4f63-871b-90a21681dbb4" width="200"/><br>
+      ─────────────<br>
+      주제만 입력하면 이미지 + 자막 자동 생성
+    </td>
+    <td align="center" valign="top">
+      <b>6. 부분 영상 생성</b><br>
+      ─────────────<br>
+      <img src="https://github.com/user-attachments/assets/49fa749c-54b7-4f75-aa5d-1bdca2fbc10f" width="200"/><br>
+      ─────────────<br>
+      이미지 하나 당 5초의 영상 생성
+    </td>
+  </tr>
+  <tr>
+    <td align="center" valign="top">
+      <b>7. 최종 영상 생성</b><br>
+      ─────────────<br>
+      <img src="https://github.com/user-attachments/assets/1e340716-a165-410e-a66e-9386ef441af8" width="200"/><br>
+      ─────────────<br>
+      자막 + TTS + 배경음악 합친 최종 영상 생성
+    </td>
+    <td align="center" valign="top">
+      <b>8. 앱 게시판 / 유튜브 업로드</b><br>
+      ─────────────<br>
+      <img src="https://github.com/user-attachments/assets/86e969ab-6dd7-4391-bc91-1f8ae0b82be5" width="200"/><br>
+      ─────────────<br>
+      앱 자체 게시판 혹은 유튜브로 업로드
+    </td>
+    <td align="center" valign="top">
+      <b>9. 유튜브 업로드 결과</b><br>
+      ─────────────<br>
+      <img src="https://github.com/user-attachments/assets/4e7d5bc7-4b23-4e28-bd40-e00414c6f42c" width="200"/><br>
+      ─────────────<br>
+      숏폼을 유튜브로 업로드한 결과 화면
+    </td>
+  </tr>
+</table>  
 
-빌드 및 실행
+<br><br>
 
-💡 기여 방법
+## 주요 적용 기술
 
-이슈 생성 및 피드백 남기기
+| 분류           | 내용 |
+|----------------|------|
+| **개발 언어**   | |
+| **개발 환경**   | <img src="https://img.shields.io/badge/macOS-000000?style=for-the-badge&logo=apple&logoColor=white"/> |
+| **개발 도구**   | |
+ 
 
-포크 후 브랜치 생성 및 PR 요청
+<br><br>
 
-💼 라이선스
 
-필요시 라이선스를 명시하세요
+## 프로젝트 결과물
+
+| 항목 | 링크 |
+|------|------|
+| 시연 영상 | https://www.youtube.com/watch?v=NmFMFC-CuDM |
