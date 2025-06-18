@@ -16,6 +16,7 @@ class StatsViewModel {
     private let formatter = DateFormatter()
     
     private(set) var groupedStats: [(label: String, totalSeconds: Int)] = []
+    private var validTodos: [(date: Date, duration: Int)] = []
     
     init() {
         formatter.dateFormat = "yyyy-MM-dd"
@@ -24,7 +25,7 @@ class StatsViewModel {
     func process(todos: [TodoItem], scope: StatsScope) {
         groupedStats = []
 
-        let validTodos = todos.compactMap { item -> (date: Date, duration: Int)? in
+        validTodos = todos.compactMap { item -> (date: Date, duration: Int)? in
             guard let date = formatter.date(from: item.date) else { return nil }
             return (date: date, duration: item.duration)
         }
@@ -53,7 +54,6 @@ class StatsViewModel {
                 (label: label, totalSeconds: grouped[label, default: 0])
             }
         } else {
-            // ✅ 월간은 현재 달의 주차 수만큼 라벨 고정 생성
             let weekCount = numberOfWeeksInCurrentMonth()
             let labels = (1...weekCount).map { "\($0)주차" }
             groupedStats = labels.map { label in
@@ -62,6 +62,31 @@ class StatsViewModel {
         }
     }
 
+    // ✅ 증감 계산 함수
+    func calculateDifference(scope: StatsScope) -> Int {
+        switch scope {
+        case .week:
+            return compareWeek(offset: 0) - compareWeek(offset: -1)
+        case .month:
+            return compareMonth(offset: 0) - compareMonth(offset: -1)
+        }
+    }
+
+    private func compareWeek(offset: Int) -> Int {
+        guard let targetDate = calendar.date(byAdding: .weekOfYear, value: offset, to: Date()) else { return 0 }
+        let filtered = validTodos.filter {
+            calendar.isDate($0.date, equalTo: targetDate, toGranularity: .weekOfYear)
+        }
+        return filtered.map { $0.duration }.reduce(0, +)
+    }
+
+    private func compareMonth(offset: Int) -> Int {
+        guard let targetDate = calendar.date(byAdding: .month, value: offset, to: Date()) else { return 0 }
+        let filtered = validTodos.filter {
+            calendar.isDate($0.date, equalTo: targetDate, toGranularity: .month)
+        }
+        return filtered.map { $0.duration }.reduce(0, +)
+    }
 
     private func weekdayLabel(from date: Date) -> String {
         let weekdaySymbols = ["일", "월", "화", "수", "목", "금", "토"]
@@ -84,6 +109,15 @@ class StatsViewModel {
         let total = groupedStats.map { $0.totalSeconds }.reduce(0, +)
         let hours = total / 3600
         let mins = (total % 3600) / 60
-        return "\(hours)시간 \(mins)분"
+        
+        if hours > 0 && mins > 0 {
+            return "\(hours)시간 \(mins)분"
+        } else if hours > 0 {
+            return "\(hours)시간"
+        } else if mins > 0 {
+            return "\(mins)분"
+        } else {
+            return "0분"
+        }
     }
 }

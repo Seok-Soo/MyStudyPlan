@@ -13,6 +13,7 @@ class StatsViewController: UIViewController {
     @IBOutlet weak var barChartView: BarChartView!
     @IBOutlet weak var scopeSegment: UISegmentedControl!
     @IBOutlet weak var totalLabel: UILabel!
+    @IBOutlet weak var compareLabel: UILabel!  // ✅ 새로 추가된 비교 레이블
 
     var viewModel = StatsViewModel()
     var allTodos: [TodoItem] = []
@@ -22,7 +23,6 @@ class StatsViewController: UIViewController {
         scopeSegment.selectedSegmentIndex = 0
         scopeSegment.addTarget(self, action: #selector(scopeChanged), for: .valueChanged)
 
-        // Firebase에서 전체 데이터 불러오기
         DbFirebase(parentNotification: { [weak self] data, action in
             guard let self = self,
                   let data = data,
@@ -62,26 +62,50 @@ class StatsViewController: UIViewController {
         dataSet.valueColors = [UIColor.clear]
 
         let data = BarChartData(dataSet: dataSet)
-
         barChartView.data = data
 
         barChartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: labels)
         barChartView.xAxis.labelPosition = .bottom
         barChartView.xAxis.labelFont = .systemFont(ofSize: 13, weight: .medium)
-        barChartView.xAxis.labelTextColor = .white
-//        barChartView.xAxis.labelRotationAngle = -20
+        barChartView.xAxis.labelTextColor = .darkGray
         barChartView.xAxis.drawGridLinesEnabled = false
         barChartView.xAxis.granularity = 1
         barChartView.xAxis.granularityEnabled = true
-//        barChartView.xAxis.setLabelCount(labels.count, force: true)
 
         barChartView.leftAxis.enabled = false
         barChartView.rightAxis.enabled = false
         barChartView.legend.enabled = false
-
         barChartView.noDataText = "기록된 데이터가 없습니다"
         barChartView.animate(yAxisDuration: 0.6)
 
         totalLabel.text = "총 공부 시간: \(viewModel.totalTimeFormatted())"
+
+        // ✅ 증감 표시
+        let diff = viewModel.calculateDifference(scope: scope)
+        if diff == 0 {
+            compareLabel.text = ""
+        } else if diff > 0 {
+            compareLabel.textColor = .systemGreen
+            compareLabel.text = "+\(formatDuration(seconds: diff)) 증가"
+        } else {
+            compareLabel.textColor = .systemRed
+            compareLabel.text = "-\(formatDuration(seconds: abs(diff))) 감소"
+        }
+    }
+
+    // ✅ 시간 변환 함수 재사용
+    func formatDuration(seconds: Int) -> String {
+        let hours = seconds / 3600
+        let minutes = (seconds % 3600) / 60
+
+        if hours > 0 && minutes > 0 {
+            return "\(hours)시간 \(minutes)분"
+        } else if hours > 0 {
+            return "\(hours)시간"
+        } else if minutes > 0 {
+            return "\(minutes)분"
+        } else {
+            return "0분"
+        }
     }
 }

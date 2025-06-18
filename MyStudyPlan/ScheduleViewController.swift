@@ -112,13 +112,28 @@ class ScheduleViewController: UIViewController, FSCalendarDelegate, FSCalendarDa
         return filteredTodos.count
     }
 
+    func formatDuration(seconds: Int) -> String {
+        let hours = seconds / 3600
+        let minutes = (seconds % 3600) / 60
+        
+        if hours > 0 && minutes > 0 {
+            return "\(hours)시간 \(minutes)분"
+        } else if hours > 0 && minutes == 0 {
+            return "\(hours)시간"
+        } else if hours == 0 && minutes > 0 {
+            return "\(minutes)분"
+        } else {
+            return "0분"
+        }
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let todo = filteredTodos[indexPath.row]
         
         // ✅ 커스텀 셀 생성
         let cell = UITableViewCell(style: .subtitle, reuseIdentifier: "TodoCell")
         cell.textLabel?.text = todo.title
-        cell.detailTextLabel?.text = "\(todo.status) • \(todo.duration)분"
+        cell.detailTextLabel?.text = "\(todo.status) • \(formatDuration(seconds: todo.duration))"
         // ✅ 셀 속성 커스터마이징
         cell.textLabel?.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         cell.textLabel?.textColor = .white
