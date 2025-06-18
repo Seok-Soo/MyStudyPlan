@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		A33652B42E00724000452FCA /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = A33652B32E00724000452FCA /* FSCalendar */; };
-		A338178B2E02C1BE007DF87E /* DGChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = A3BA54742E005A2C0060D1F9 /* DGChartsDynamic */; };
 		A3BA54602DFD42C60060D1F9 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = A3BA545F2DFD42C60060D1F9 /* FirebaseFirestore */; };
 		A3BA54622DFD42CE0060D1F9 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = A3BA54612DFD42CE0060D1F9 /* FirebaseStorage */; };
 		A3BA54732E005A2C0060D1F9 /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = A3BA54722E005A2C0060D1F9 /* DGCharts */; };
@@ -44,7 +43,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A338178B2E02C1BE007DF87E /* DGChartsDynamic in Frameworks */,
 				A3BA54602DFD42C60060D1F9 /* FirebaseFirestore in Frameworks */,
 				A33652B42E00724000452FCA /* FSCalendar in Frameworks */,
 				A3BA54732E005A2C0060D1F9 /* DGCharts in Frameworks */,
