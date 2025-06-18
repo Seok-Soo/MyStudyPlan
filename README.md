@@ -65,12 +65,12 @@
     </td>
   </tr>
 </table>
----
+
 
 ## 결과물 링크
 
 | 항목 | 링크 |
 |---|---|
-| 시연 영상 | [시연 영상](https://www.youtube.com/shorts/nyvptvkIfjc) |
+| 시연 영상 | [[시연 영상](https://www.youtube.com/shorts/nyvptvkIfjc)](https://www.youtube.com/shorts/nyvptvkIfjc) |
 
 ---
