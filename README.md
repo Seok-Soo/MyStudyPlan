@@ -13,7 +13,7 @@
 | 1 | 할 일 목록 확인 | 오늘의 할 일 리스트 확인 |
 | 2 | 할 일 추가 | 새로운 할 일 등록 |
 | 3 | 일별 통계 | 하루 동안의 공부 시간 통계 시각화 |
-| 4 | 월별 통계 | 한 달 동안의 공부 시간 통계 시각화 |
+| 4 | 월별 통계 | 한 달 동안의 공부 시간을 주차별로 통계 시각화 |
 | 5 | 일정 확인 | 전체 스케줄 및 캘린더 확인 |
 ---
 
@@ -51,7 +51,7 @@
     <td align="center" valign="top">
       <b>4. 월별 통계</b><br><br>
       <img src="./images/MonthStatsScreen.png" width="200"/><br><br>
-      한 달 동안의 공부 시간 통계 시각화
+      한 달 동안의 공부 시간을 주차별 통계 시각화
     </td>
     <td align="center" valign="top">
       <b>5. 일정 확인</b><br><br>
@@ -74,6 +74,6 @@
 
 | 항목 | 링크 |
 |---|---|
-| 시연 영상 | [[시연 영상](https://www.youtube.com/shorts/nyvptvkIfjc)](https://www.youtube.com/shorts/nyvptvkIfjc) |
+| 시연 영상 | [https://www.youtube.com/shorts/nyvptvkIfjc](https://www.youtube.com/shorts/nyvptvkIfjc) |
 
 ---
