@@ -12,7 +12,8 @@ class TodoViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var addButton: UIButton!
-
+    @IBOutlet weak var headerStackView: UIView!
+    
     var currentDate: Date = Date()
     var viewModel = TodoViewModel()
 
@@ -48,6 +49,9 @@ class TodoViewController: UIViewController, UITableViewDelegate, UITableViewData
         addButton.titleLabel?.font = .systemFont(ofSize: 30, weight: .bold)
         addButton.tintColor = .white
         addButton.backgroundColor = .systemIndigo
+
+        headerStackView.layer.cornerRadius = 15
+        headerStackView.clipsToBounds = true
     }
 
     @IBAction func didTapPrevDate(_ sender: UIButton) {
