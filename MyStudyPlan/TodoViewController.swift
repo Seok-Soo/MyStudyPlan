@@ -105,7 +105,7 @@ class TodoViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 16  // 셀 위 여백
+        return 1  // 셀 위 여백
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -113,7 +113,7 @@ class TodoViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
 
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 8  // 셀 아래 여백
+        return 1  // 셀 아래 여백
     }
 
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -122,9 +122,14 @@ class TodoViewController: UIViewController, UITableViewDelegate, UITableViewData
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         // ✅ 셀 배경 + 둥근 모서리
-        let margin: CGFloat = 16
+        let margin: CGFloat = 2
+        let verticalPadding: CGFloat = 4  // 위아래 높이 줄이기
         let bgView = UIView(
-            frame: CGRect(x: margin, y: 0, width: tableView.bounds.width - margin * 2, height: cell.bounds.height)
+            frame: CGRect(
+                x: margin,
+                y: verticalPadding / 2,
+                width: tableView.bounds.width - margin * 2,
+                height: cell.bounds.height - verticalPadding)
         )
         bgView.backgroundColor = UIColor(red: 37/255, green: 56/255, blue: 71/255, alpha: 1.0)
         bgView.layer.cornerRadius = 10
