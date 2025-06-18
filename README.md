@@ -17,13 +17,13 @@
 | 5 | 일정 확인 | 전체 스케줄 및 캘린더 확인 |
 ---
 
-## 기술 스택
+## 주요 기술 스택
 
 | 분류 | 내용 |
-|---|---|
-| 개발 언어 | Swift |
-| 개발 도구 | Xcode |
-| 백엔드 서비스 | Firebase |
+| --- | --- |
+| 개발 언어 | ![Swift](https://img.shields.io/badge/Swift-FA7343?style=for-the-badge&logo=swift&logoColor=white) |
+| 개발 도구 | ![Xcode](https://img.shields.io/badge/Xcode-147EFB?style=for-the-badge&logo=xcode&logoColor=white) ![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black) |
+| 주요 패키지 | Firebase (11.14.0) / FSCalendar(2.8.4) / DGCharts (5.1.0) |
 
 ---
 
@@ -71,7 +71,6 @@
 
 | 항목 | 링크 |
 |---|---|
-| 배포 링크 | [앱 다운로드 링크](https://example.com) |
-| 시연 영상 | (추후 추가) |
+| 시연 영상 | [시연 영상](https://www.youtube.com/shorts/nyvptvkIfjc) |
 
 ---
