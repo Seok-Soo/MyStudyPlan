@@ -58,7 +58,7 @@ class StatsViewController: UIViewController {
         }
 
         let dataSet = BarChartDataSet(entries: entries, label: "")
-        dataSet.colors = [UIColor.systemIndigo]
+        dataSet.colors = [UIColor(red: 37/255, green: 56/255, blue: 71/255, alpha: 1.0)]
         dataSet.valueColors = [UIColor.clear]
 
         let data = BarChartData(dataSet: dataSet)
@@ -68,7 +68,7 @@ class StatsViewController: UIViewController {
         barChartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: labels)
         barChartView.xAxis.labelPosition = .bottom
         barChartView.xAxis.labelFont = .systemFont(ofSize: 13, weight: .medium)
-        barChartView.xAxis.labelTextColor = .darkGray
+        barChartView.xAxis.labelTextColor = .white
 //        barChartView.xAxis.labelRotationAngle = -20
         barChartView.xAxis.drawGridLinesEnabled = false
         barChartView.xAxis.granularity = 1
